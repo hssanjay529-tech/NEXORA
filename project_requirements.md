@@ -2,21 +2,7 @@
 
 > A centralized, role-aware academic operations platform for administrators, faculty, and students — built around transparent workflows and real-time institutional intelligence.
 
----
-
-## Project Information
-
-| Field             | Details                   |
-| ----------------- | ------------------------- |
-| **Project Name**  | NEXORA                    |
-| **Project Type**  | College Management Portal |
-| **Version**       | 1.0 — Draft               |
-| **Prepared**      | September 2026            |
-| **Roles Covered** | Admin · Faculty · Student |
-| **Status**        | Requirements Phase        |
-
----
-
+----------------
 # 1. Portal Overview
 
 NEXORA is a centralized college management portal designed to manage academic, administrative, financial, communication, examination, and student-support operations through a single platform.
