@@ -11,15 +11,6 @@ The portal uses **role-based access control (RBAC)** so that every agent has a d
 
 ### Core Design Model
 
-```text
-Agent → Action → Entity
-```
-
-Where:
-
-* **Agent** = Who performs the action
-* **Action** = Operation performed
-* **Entity** = Data object or resource affected
 
 ### Priority Levels
 
