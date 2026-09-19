@@ -1,142 +1,454 @@
-# NEXORA — College Management Portal
+# NEXORA — COLLEGE MANAGEMENT PORTAL
 
-> A centralized, role-aware academic operations platform for administrators, faculty, and students — built around transparent workflows and real-time institutional intelligence.
+> **One Portal. Three Roles. Connected Academic Operations.**
 
-----------------
-# 1. Portal Overview
-
-NEXORA is a centralized college management portal designed to manage academic, administrative, financial, communication, examination, and student-support operations through a single platform.
-
-The portal uses **role-based access control (RBAC)** so that every agent has a defined permission scope.
-
-### Core Design Model
-
-
-### Priority Levels
-
-| Priority      | Description                                |
-| ------------- | ------------------------------------------ |
-| 🔴 **High**   | Core functionality required for the portal |
-| 🟡 **Medium** | Important supporting functionality         |
-| 🟢 **Low**    | Optional / future functionality            |
+**Version:** 1.0
+**Stage:** Requirements + Implementation
+**Roles:** Admin · Faculty · Student
 
 ---
 
-# 2. Portal Roles
+# 1. PROJECT OVERVIEW
 
-## 2.1 ⬡ Admin
+NEXORA is a centralized, role-aware college management platform designed to manage academic, administrative, financial, examination, communication, documentation, analytics, and student-support operations through a single system.
 
-### System Administrator
+NEXORA uses **Role-Based Access Control (RBAC)** to ensure that every user can access only the resources and operations permitted to their role.
 
-The Admin owns institution-level configuration, user lifecycle, academic calendar, financial configuration, and cross-department reporting.
+```text
+                    NEXORA
+                       │
+          ┌────────────┼────────────┐
+          │            │            │
+        ADMIN        FACULTY      STUDENT
+          │            │            │
+          └────────────┼────────────┘
+                       │
+                Authentication
+                       │
+                      RBAC
+                       │
+                  API Layer
+                       │
+               Business Logic
+                       │
+                  Database
+                       │
+          ┌────────────┼────────────┐
+          │            │            │
+       Analytics     Audit       Reports
+```
 
-### Responsibilities
+---
 
-* Manage user accounts and roles
-* Configure academic calendar
-* Manage departments
-* Manage academic structures
-* Configure fee structures
-* Assign classrooms and laboratories
-* Manage institutional timetables
-* Publish announcements
-* Approve academic requests
-* Monitor institution-wide analytics
-* Manage compliance documents
+# 2. PRIORITY LEVELS
 
-### Permission Scope
+| Priority  | Meaning                                          |
+| --------- | ------------------------------------------------ |
+| 🔴 High   | Core functionality required for portal operation |
+| 🟡 Medium | Important supporting functionality               |
+| 🟢 Low    | Optional / future functionality                  |
+
+---
+
+# 3. THREE SEPARATE LOGIN PORTALS
+
+NEXORA must provide **three separate login pages**.
+
+```text
+NEXORA
+│
+├── Admin Portal
+│   └── /admin/login
+│
+├── Faculty Portal
+│   └── /faculty/login
+│
+└── Student Portal
+    └── /student/login
+```
+
+A public portal-selection page may also be provided:
+
+```text
+/login
+```
+
+The page allows the user to choose:
+
+```text
+┌──────────────┐  ┌──────────────┐  ┌──────────────┐
+│    ADMIN     │  │   FACULTY    │  │   STUDENT    │
+│      🔐      │  │      👨‍🏫     │  │      🎓      │
+│ [ Login ]    │  │ [ Login ]    │  │ [ Login ]    │
+└──────────────┘  └──────────────┘  └──────────────┘
+```
+
+---
+
+# 4. ADMIN LOGIN
+
+## Route
+
+```text
+/admin/login
+```
+
+## Login Fields
+
+```text
+Admin ID / Email
+Password
+Remember Me
+Forgot Password
+Login
+```
+
+## Authentication Flow
 
 ```text
 Admin
-├── Create
-├── Read
-├── Update
-├── Delete / Deactivate
-├── Approve
-├── Configure
-├── Publish
-└── Generate Reports
+   ↓
+/admin/login
+   ↓
+Enter Credentials
+   ↓
+Credential Validation
+   ↓
+Verify ADMIN Role
+   ↓
+Permission Validation
+   ↓
+Admin Dashboard
+```
+
+## Admin Dashboard
+
+```text
+/admin/dashboard
+```
+
+## Admin Modules
+
+```text
+User Management
+Student Management
+Faculty Management
+Department Management
+Course Management
+Academic Calendar
+Timetable
+Attendance
+Grades
+Examinations
+Fees
+Documents
+Grievances
+Academic Flags
+Notifications
+Analytics
+Compliance
+Workflow Management
+Audit Logs
+Settings
 ```
 
 ---
 
-## 2.2 ◈ Faculty
+# 5. FACULTY LOGIN
 
-### Teaching Staff
+## Route
 
-Faculty members manage course content, attendance, assignments, grading, academic concerns, and communication with enrolled students.
+```text
+/faculty/login
+```
 
-### Responsibilities
+## Login Fields
 
-* Upload course materials
-* Record attendance
-* Create assignments and quizzes
-* Grade student submissions
-* Submit internal and final marks
-* Raise academic flags
-* Post course announcements
-* Participate in discussions
-* Apply for leave
-* Request timetable changes
-* Propose new courses and syllabus changes
+```text
+Faculty ID / Email
+Password
+Remember Me
+Forgot Password
+Login
+```
 
-### Permission Scope
+## Authentication Flow
 
 ```text
 Faculty
-├── Read Assigned Data
-├── Create
-├── Update
-├── Upload
-├── Record
-├── Grade
-├── Submit
-├── Raise
-└── Request Approval
+   ↓
+/faculty/login
+   ↓
+Enter Credentials
+   ↓
+Credential Validation
+   ↓
+Verify FACULTY Role
+   ↓
+Permission Validation
+   ↓
+Faculty Dashboard
+```
+
+## Faculty Dashboard
+
+```text
+/faculty/dashboard
+```
+
+## Faculty Modules
+
+```text
+My Courses
+Timetable
+Attendance
+Assignments
+Quizzes
+Grades
+Academic Flags
+Leave Requests
+Course Proposals
+Discussions
+Messages
+Notifications
+Profile
 ```
 
 ---
 
-## 2.3 ◎ Student
+# 6. STUDENT LOGIN
 
-### Enrolled Student
+## Route
 
-Students access their academic records and perform activities related to courses, assignments, examinations, fees, documents, and support.
+```text
+/student/login
+```
 
-### Responsibilities
+## Login Fields
 
-* Register for courses
-* View timetable
-* Track attendance
-* Submit assignments
-* View marks and results
-* Pay fees
-* Register for examinations
-* Download hall tickets
-* Track performance analytics
-* Raise grievances
-* Request official documents
-* Communicate with faculty
+```text
+Student ID / Register Number
+Password
+Remember Me
+Forgot Password
+Login
+```
 
-### Permission Scope
+## Authentication Flow
 
 ```text
 Student
-├── View Personal Data
-├── Register
-├── Submit
-├── Pay
-├── Download
-├── Track
-├── Raise Requests
-└── Participate
+   ↓
+/student/login
+   ↓
+Enter Credentials
+   ↓
+Credential Validation
+   ↓
+Verify STUDENT Role
+   ↓
+Permission Validation
+   ↓
+Student Dashboard
+```
+
+## Student Dashboard
+
+```text
+/student/dashboard
+```
+
+## Student Modules
+
+```text
+My Profile
+My Courses
+Timetable
+Attendance
+Assignments
+Quizzes
+Marks
+Examinations
+Fees
+Documents
+Grievances
+Academic Flags
+Messages
+Notifications
+Performance Analytics
 ```
 
 ---
 
-# 3. Functional Requirements
+# 7. LOGIN SECURITY
 
-Each requirement follows the relationship:
+Although the login pages are separate, authentication should use a shared secure backend.
+
+```text
+Admin Login ───┐
+Faculty Login ─┼──> Authentication Service
+Student Login ─┘              │
+                              ↓
+                       Credential Check
+                              │
+                         Role Validation
+                              │
+                         Session Creation
+```
+
+Backend authentication endpoints:
+
+```text
+POST /api/auth/admin/login
+POST /api/auth/faculty/login
+POST /api/auth/student/login
+
+POST /api/auth/admin/logout
+POST /api/auth/faculty/logout
+POST /api/auth/student/logout
+
+POST /api/auth/admin/forgot-password
+POST /api/auth/faculty/forgot-password
+POST /api/auth/student/forgot-password
+```
+
+The backend must verify both:
+
+```text
+Valid Credentials
++
+Expected Role
+```
+
+A Student account must not be able to authenticate through:
+
+```text
+/admin/login
+/faculty/login
+```
+
+and similarly for the other roles.
+
+---
+
+# 8. PORTAL ROLES
+
+## 8.1 ADMIN
+
+Admin owns institution-level configuration, user lifecycle, academic structure, financial configuration, approvals, analytics, and compliance.
+
+### Admin Responsibilities
+
+```text
+Manage users
+Manage roles
+Manage departments
+Manage academic calendar
+Manage courses
+Configure fees
+Assign rooms
+Manage timetable
+Publish announcements
+Approve academic requests
+Manage examinations
+Monitor analytics
+Manage compliance
+Manage documents
+Review grievances
+Manage audit logs
+```
+
+### Admin Permissions
+
+```text
+CREATE
+READ
+UPDATE
+DELETE / DEACTIVATE
+APPROVE
+CONFIGURE
+PUBLISH
+GENERATE REPORTS
+```
+
+---
+
+# 9. FACULTY
+
+Faculty members manage academic activities for courses assigned to them.
+
+### Faculty Responsibilities
+
+```text
+Upload course materials
+Record attendance
+Create assignments
+Create quizzes
+Grade submissions
+Submit marks
+Raise academic flags
+Post course announcements
+Participate in discussions
+Apply for leave
+Request timetable changes
+Propose courses
+```
+
+### Faculty Permissions
+
+```text
+READ ASSIGNED DATA
+CREATE
+UPDATE
+UPLOAD
+RECORD
+GRADE
+SUBMIT
+RAISE
+REQUEST APPROVAL
+```
+
+---
+
+# 10. STUDENT
+
+Students manage academic activities related to their own records and enrolled courses.
+
+### Student Responsibilities
+
+```text
+Register for courses
+View timetable
+Track attendance
+Submit assignments
+View marks
+Pay fees
+Register for examinations
+Download hall tickets
+View performance analytics
+Raise grievances
+Request documents
+Communicate with faculty
+```
+
+### Student Permissions
+
+```text
+VIEW PERSONAL DATA
+REGISTER
+SUBMIT
+PAY
+DOWNLOAD
+TRACK
+RAISE REQUESTS
+PARTICIPATE
+```
+
+---
+
+# 11. FUNCTIONAL REQUIREMENTS
+
+Every requirement follows:
 
 ```text
 Agent → Action → Entity
@@ -144,66 +456,173 @@ Agent → Action → Entity
 
 ---
 
-# 4. Administrator Requirements
+# 12. ADMIN REQUIREMENTS
 
-| ID         | Requirement                                                                                                       | Agent → Action → Entity                   | Priority  |
-| ---------- | ----------------------------------------------------------------------------------------------------------------- | ----------------------------------------- | --------- |
-| **ADM-01** | Admin can create, update, deactivate, and archive user accounts for all roles.                                    | **Admin → Manages → User Account**        | 🔴 High   |
-| **ADM-02** | Admin can define and publish the academic calendar including semesters, holidays, and examination windows.        | **Admin → Publishes → Academic Calendar** | 🔴 High   |
-| **ADM-03** | Admin can create departments, assign department heads, and allocate budgets per department.                       | **Admin → Configures → Department**       | 🔴 High   |
-| **ADM-04** | Admin can generate institution-wide analytics reports including enrolment trends, pass rates, and fee collection. | **Admin → Generates → Analytics Report**  | 🟡 Medium |
-| **ADM-05** | Admin can configure fee structures, apply scholarships, and track payment status for each student.                | **Admin → Configures → Fee Structure**    | 🔴 High   |
-| **ADM-06** | Admin can assign classrooms and laboratories to time slots and courses through a visual timetable editor.         | **Admin → Assigns → Timetable / Room**    | 🟡 Medium |
-| **ADM-07** | Admin can send broadcast notices and targeted alerts to selected role groups.                                     | **Admin → Broadcasts → Notification**     | 🟡 Medium |
-| **ADM-08** | Admin can approve or reject course additions or removals proposed by faculty.                                     | **Admin → Approves → Course Proposal**    | 🟢 Low    |
-| **ADM-09** | Admin can manage accreditation documents and track compliance deadlines.                                          | **Admin → Tracks → Compliance Document**  | 🟢 Low    |
-
----
-
-# 5. Faculty Requirements
-
-| ID         | Requirement                                                                                           | Agent → Action → Entity                         | Priority  |
-| ---------- | ----------------------------------------------------------------------------------------------------- | ----------------------------------------------- | --------- |
-| **FAC-01** | Faculty can upload lecture notes, slides, and reading materials to course modules.                    | **Faculty → Uploads → Course Material**         | 🔴 High   |
-| **FAC-02** | Faculty can mark daily attendance for each enrolled student and flag absence patterns.                | **Faculty → Records → Attendance**              | 🔴 High   |
-| **FAC-03** | Faculty can create, publish, and auto-grade assignments and quizzes using rubrics.                    | **Faculty → Creates → Assignment / Quiz**       | 🔴 High   |
-| **FAC-04** | Faculty can enter internal marks, grade examinations, and submit final results to Admin for approval. | **Faculty → Submits → Grade Record**            | 🔴 High   |
-| **FAC-05** | Faculty can raise academic concern flags on a student's profile.                                      | **Faculty → Raises → Academic Flag**            | 🟡 Medium |
-| **FAC-06** | Faculty can post announcements and create threaded discussion boards for each course.                 | **Faculty → Posts → Discussion / Announcement** | 🟡 Medium |
-| **FAC-07** | Faculty can view their timetable and request schedule changes through Admin.                          | **Faculty → Requests → Schedule Change**        | 🟢 Low    |
-| **FAC-08** | Faculty can apply for leave and track the approval status.                                            | **Faculty → Applies → Leave Request**           | 🟡 Medium |
-| **FAC-09** | Faculty can propose new courses or syllabus modifications for Admin review.                           | **Faculty → Proposes → Course Proposal**        | 🟢 Low    |
+| ID     | Requirement                                          | Relation                              | Priority |
+| ------ | ---------------------------------------------------- | ------------------------------------- | -------- |
+| ADM-01 | Create, update, deactivate and archive user accounts | Admin → Manages → User Account        | 🔴       |
+| ADM-02 | Create and publish academic calendar                 | Admin → Publishes → Academic Calendar | 🔴       |
+| ADM-03 | Create departments and assign department heads       | Admin → Configures → Department       | 🔴       |
+| ADM-04 | Generate institution-wide analytics                  | Admin → Generates → Analytics Report  | 🟡       |
+| ADM-05 | Configure fees, scholarships and payment status      | Admin → Configures → Fee Structure    | 🔴       |
+| ADM-06 | Assign rooms and timetable slots                     | Admin → Assigns → Timetable / Room    | 🟡       |
+| ADM-07 | Broadcast notices and targeted alerts                | Admin → Broadcasts → Notification     | 🟡       |
+| ADM-08 | Approve or reject course proposals                   | Admin → Approves → Course Proposal    | 🟢       |
+| ADM-09 | Manage compliance records                            | Admin → Tracks → Compliance Document  | 🟢       |
+| ADM-10 | Manage examination schedules                         | Admin → Manages → Examination         | 🔴       |
+| ADM-11 | Manage document requests                             | Admin → Approves → Document Request   | 🟡       |
+| ADM-12 | Manage grievances                                    | Admin → Resolves → Grievance Ticket   | 🟡       |
 
 ---
 
-# 6. Student Requirements
+# 13. FACULTY REQUIREMENTS
 
-| ID         | Requirement                                                                                | Agent → Action → Entity                       | Priority  |
-| ---------- | ------------------------------------------------------------------------------------------ | --------------------------------------------- | --------- |
-| **STU-01** | Student can register for available courses in their programme during the enrolment window. | **Student → Registers → Course**              | 🔴 High   |
-| **STU-02** | Student can view their personal timetable, attendance percentage, and academic calendar.   | **Student → Views → Timetable / Attendance**  | 🔴 High   |
-| **STU-03** | Student can submit assignments, view feedback, and track submission history.               | **Student → Submits → Assignment**            | 🔴 High   |
-| **STU-04** | Student can view internal marks, grade cards, and semester results.                        | **Student → Views → Grade Card**              | 🔴 High   |
-| **STU-05** | Student can pay tuition fees online and download official payment receipts.                | **Student → Pays → Fee / Receipt**            | 🔴 High   |
-| **STU-06** | Student can register for upcoming examinations and download hall tickets.                  | **Student → Registers → Exam / Hall Ticket**  | 🔴 High   |
-| **STU-07** | Student can view a personal performance dashboard with CGPA trend graphs.                  | **Student → Tracks → Performance Analytics**  | 🟡 Medium |
-| **STU-08** | Student can raise a grievance or support ticket and track its resolution status.           | **Student → Raises → Grievance Ticket**       | 🟡 Medium |
-| **STU-09** | Student can apply for bonafide certificates, transcripts, and other official documents.    | **Student → Applies → Document Request**      | 🟡 Medium |
-| **STU-10** | Student can participate in course discussion boards and message faculty within the portal. | **Student → Participates → Discussion Board** | 🟢 Low    |
-
----
-
-# 7. Entity Dictionary
-
-The following entities represent the core data objects of the NEXORA system.
+| ID     | Requirement                                | Relation                                    | Priority |
+| ------ | ------------------------------------------ | ------------------------------------------- | -------- |
+| FAC-01 | Upload lecture notes, slides and materials | Faculty → Uploads → Course Material         | 🔴       |
+| FAC-02 | Record daily attendance                    | Faculty → Records → Attendance              | 🔴       |
+| FAC-03 | Create assignments and quizzes             | Faculty → Creates → Assignment / Quiz       | 🔴       |
+| FAC-04 | Enter and submit internal/final marks      | Faculty → Submits → Grade Record            | 🔴       |
+| FAC-05 | Raise academic concern flags               | Faculty → Raises → Academic Flag            | 🟡       |
+| FAC-06 | Post announcements and discussions         | Faculty → Posts → Announcement / Discussion | 🟡       |
+| FAC-07 | Request timetable changes                  | Faculty → Requests → Schedule Change        | 🟢       |
+| FAC-08 | Apply for leave                            | Faculty → Applies → Leave Request           | 🟡       |
+| FAC-09 | Propose courses/syllabus modifications     | Faculty → Proposes → Course Proposal        | 🟢       |
+| FAC-10 | Grade assignment submissions               | Faculty → Grades → Assignment Submission    | 🔴       |
 
 ---
 
-## 7.1 User Account
+# 14. STUDENT REQUIREMENTS
 
-**Purpose:** Stores authentication, identity, and role information.
+| ID     | Requirement                                 | Relation                                  | Priority |
+| ------ | ------------------------------------------- | ----------------------------------------- | -------- |
+| STU-01 | Register for available courses              | Student → Registers → Course              | 🔴       |
+| STU-02 | View timetable and attendance               | Student → Views → Timetable / Attendance  | 🔴       |
+| STU-03 | Submit assignments and view feedback        | Student → Submits → Assignment            | 🔴       |
+| STU-04 | View marks and semester results             | Student → Views → Grade Card              | 🔴       |
+| STU-05 | Pay fees and download receipts              | Student → Pays → Fee / Receipt            | 🔴       |
+| STU-06 | Register for exams and download hall ticket | Student → Registers → Exam / Hall Ticket  | 🔴       |
+| STU-07 | Track academic performance                  | Student → Tracks → Performance Analytics  | 🟡       |
+| STU-08 | Raise and track grievances                  | Student → Raises → Grievance Ticket       | 🟡       |
+| STU-09 | Request official documents                  | Student → Applies → Document Request      | 🟡       |
+| STU-10 | Participate in course discussions           | Student → Participates → Discussion Board | 🟢       |
 
-### Attributes
+---
+
+# 15. CORE ENTITIES
+
+The main database entities are:
+
+```text
+User
+StudentProfile
+FacultyProfile
+Department
+
+AcademicYear
+Semester
+AcademicCalendar
+
+Course
+CourseEnrollment
+CourseMaterial
+
+Attendance
+AttendanceSession
+
+Assignment
+AssignmentSubmission
+Quiz
+QuizQuestion
+QuizAttempt
+
+GradeRecord
+
+Timetable
+Room
+
+Examination
+ExamSchedule
+ExamRegistration
+HallTicket
+ExamResult
+
+FeeStructure
+StudentFee
+Payment
+Receipt
+Scholarship
+
+AcademicFlag
+
+GrievanceTicket
+
+DocumentRequest
+GeneratedDocument
+
+Notification
+Announcement
+Message
+DiscussionThread
+
+CourseProposal
+LeaveRequest
+ScheduleChangeRequest
+
+ComplianceRequirement
+ComplianceDocument
+
+Workflow
+WorkflowInstance
+WorkflowHistory
+
+AuditLog
+AnalyticsReport
+```
+
+---
+
+# 16. DATA RELATIONSHIPS
+
+```text
+Department
+ ├── Faculty
+ └── Course
+
+Faculty
+ ├── Courses
+ ├── Attendance
+ ├── Assignments
+ ├── Grades
+ ├── Academic Flags
+ ├── Leave Requests
+ └── Course Proposals
+
+Student
+ ├── Course Enrollment
+ ├── Attendance
+ ├── Assignments
+ ├── Grades
+ ├── Fees
+ ├── Exams
+ ├── Documents
+ ├── Grievances
+ └── Academic Flags
+
+Course
+ ├── Faculty
+ ├── Students
+ ├── Assignments
+ ├── Attendance
+ ├── Grades
+ └── Timetable
+```
+
+---
+
+# 17. ENTITY DETAILS
+
+## User
 
 ```text
 userID
@@ -215,7 +634,7 @@ createdAt
 lastLogin
 ```
 
-### Supported Roles
+Roles:
 
 ```text
 ADMIN
@@ -223,13 +642,7 @@ FACULTY
 STUDENT
 ```
 
----
-
-## 7.2 Department
-
-**Purpose:** Represents an academic or administrative department.
-
-### Attributes
+## Department
 
 ```text
 deptID
@@ -237,17 +650,9 @@ name
 headFacultyID
 budget
 established
-courses[]
-faculty[]
 ```
 
----
-
-## 7.3 Course
-
-**Purpose:** Represents an academic course offered by the institution.
-
-### Attributes
+## Course
 
 ```text
 courseCode
@@ -256,16 +661,9 @@ credits
 syllabusURL
 deptID
 facultyID
-enrolledStudents[]
 ```
 
----
-
-## 7.4 Attendance
-
-**Purpose:** Stores student attendance records.
-
-### Attributes
+## Attendance
 
 ```text
 attendanceID
@@ -276,7 +674,7 @@ status
 markedByFacultyID
 ```
 
-### Attendance Status
+Statuses:
 
 ```text
 PRESENT
@@ -285,13 +683,7 @@ LATE
 EXCUSED
 ```
 
----
-
-## 7.5 Assignment
-
-**Purpose:** Represents an academic assignment or assessment.
-
-### Attributes
+## Assignment
 
 ```text
 assignID
@@ -299,17 +691,10 @@ courseID
 title
 dueDate
 rubricURL
-submissions[]
 maxMarks
 ```
 
----
-
-## 7.6 Grade Record
-
-**Purpose:** Stores academic marks and final grades.
-
-### Attributes
+## Grade Record
 
 ```text
 gradeID
@@ -322,32 +707,7 @@ semester
 CGPA
 ```
 
----
-
-## 7.7 Timetable
-
-**Purpose:** Stores class scheduling information.
-
-### Attributes
-
-```text
-slotID
-courseID
-roomID
-day
-startTime
-endTime
-facultyID
-semester
-```
-
----
-
-## 7.8 Fee Record
-
-**Purpose:** Stores student fee and payment information.
-
-### Attributes
+## Fee Record
 
 ```text
 feeID
@@ -359,7 +719,7 @@ status
 receiptURL
 ```
 
-### Fee Status
+Statuses:
 
 ```text
 PENDING
@@ -371,354 +731,32 @@ CANCELLED
 
 ---
 
-## 7.9 Academic Flag
+# 18. APPROVAL WORKFLOW ENGINE
 
-**Purpose:** Stores academic or student-support concerns raised by faculty.
+NEXORA should use a reusable workflow engine.
 
-### Attributes
-
-```text
-flagID
-studentID
-type
-raisedByFacultyID
-date
-description
-resolvedAt
-```
-
-### Flag Types
-
-```text
-ATTENDANCE
-ACADEMIC
-PLAGIARISM
-MISCONDUCT
-WELFARE
-PERFORMANCE
-```
-
----
-
-## 7.10 Grievance Ticket
-
-**Purpose:** Stores student complaints and support requests.
-
-### Attributes
-
-```text
-ticketID
-studentID
-category
-description
-status
-assignedTo
-resolvedAt
-```
-
-### Ticket Status
-
-```text
-OPEN
-IN_PROGRESS
-WAITING_FOR_RESPONSE
-RESOLVED
-CLOSED
-REJECTED
-```
-
----
-
-## 7.11 Document Request
-
-**Purpose:** Stores requests for official institutional documents.
-
-### Attributes
-
-```text
-docReqID
-studentID
-type
-requestedAt
-approvedBy
-status
-downloadURL
-```
-
-### Document Types
-
-```text
-BONAFIDE
-TRANSCRIPT
-GRADE_CARD
-TRANSFER_CERTIFICATE
-COURSE_COMPLETION
-OTHER
-```
-
----
-
-## 7.12 Notification
-
-**Purpose:** Stores system notifications and institutional announcements.
-
-### Attributes
-
-```text
-notifID
-sentByID
-targetRole
-message
-channel
-sentAt
-readByStudents[]
-```
-
----
-
-## 7.13 Academic Calendar
-
-**Purpose:** Stores institution-wide academic dates and events.
-
-### Attributes
-
-```text
-calendarID
-academicYear
-semester
-startDate
-endDate
-holidays[]
-examWindows[]
-events[]
-publishedBy
-publishedAt
-```
-
----
-
-## 7.14 Course Proposal
-
-**Purpose:** Stores faculty requests for new courses or course modifications.
-
-### Attributes
-
-```text
-proposalID
-facultyID
-deptID
-courseTitle
-courseCode
-credits
-description
-syllabusURL
-status
-submittedAt
-reviewedBy
-reviewedAt
-remarks
-```
-
-### Proposal Status
-
-```text
-DRAFT
-SUBMITTED
-UNDER_REVIEW
-APPROVED
-REJECTED
-REVISION_REQUIRED
-```
-
----
-
-## 7.15 Leave Request
-
-**Purpose:** Stores faculty leave applications.
-
-### Attributes
-
-```text
-leaveID
-facultyID
-leaveType
-startDate
-endDate
-reason
-status
-approvedBy
-approvedAt
-remarks
-```
-
----
-
-## 7.16 Analytics Report
-
-**Purpose:** Stores generated institutional analytics.
-
-### Attributes
-
-```text
-reportID
-reportType
-generatedBy
-generatedAt
-departmentID
-semester
-parameters
-reportURL
-```
-
----
-
-# 8. Agent → Action → Entity Relations
-
-## Admin Relations
-
-```text
-Admin → creates & deactivates → User Account
-
-Admin → publishes → Academic Calendar
-
-Admin → approves → Course Proposal
-
-Admin → assigns → Timetable / Room
-
-Admin → configures → Fee Structure
-
-Admin → broadcasts → Notification
-
-Admin → generates → Analytics Report
-
-Admin → tracks → Compliance Document
-
-Admin → manages → Department
-```
-
----
-
-## Faculty Relations
-
-```text
-Faculty → uploads → Course Material
-
-Faculty → records → Attendance
-
-Faculty → creates → Assignment / Quiz
-
-Faculty → grades → Assignment Submission
-
-Faculty → submits → Grade Record
-
-Faculty → raises → Academic Flag
-
-Faculty → posts → Announcement
-
-Faculty → participates in → Discussion Board
-
-Faculty → applies for → Leave Request
-
-Faculty → requests → Schedule Change
-
-Faculty → proposes → Course Proposal
-```
-
----
-
-## Student Relations
-
-```text
-Student → registers for → Course
-
-Student → views → Timetable / Attendance
-
-Student → submits → Assignment
-
-Student → views → Grade Card
-
-Student → pays → Fee Record
-
-Student → registers for → Examination
-
-Student → downloads → Hall Ticket
-
-Student → tracks → Performance Analytics
-
-Student → raises → Grievance Ticket
-
-Student → applies for → Document Request
-
-Student → participates in → Discussion Board
-```
-
----
-
-# 9. Requirement Traceability Matrix
-
-| Agent   | Action      | Entity                    | Related Requirements |
-| ------- | ----------- | ------------------------- | -------------------- |
-| Admin   | Manage      | User Account              | ADM-01               |
-| Admin   | Publish     | Academic Calendar         | ADM-02               |
-| Admin   | Configure   | Department                | ADM-03               |
-| Admin   | Generate    | Analytics Report          | ADM-04               |
-| Admin   | Configure   | Fee Structure             | ADM-05               |
-| Admin   | Assign      | Timetable / Room          | ADM-06               |
-| Admin   | Broadcast   | Notification              | ADM-07               |
-| Admin   | Approve     | Course Proposal           | ADM-08               |
-| Admin   | Track       | Compliance Document       | ADM-09               |
-| Faculty | Upload      | Course Material           | FAC-01               |
-| Faculty | Record      | Attendance                | FAC-02               |
-| Faculty | Create      | Assignment / Quiz         | FAC-03               |
-| Faculty | Submit      | Grade Record              | FAC-04               |
-| Faculty | Raise       | Academic Flag             | FAC-05               |
-| Faculty | Post        | Discussion / Announcement | FAC-06               |
-| Faculty | Request     | Schedule Change           | FAC-07               |
-| Faculty | Apply       | Leave Request             | FAC-08               |
-| Faculty | Propose     | Course Proposal           | FAC-09               |
-| Student | Register    | Course                    | STU-01               |
-| Student | View        | Timetable / Attendance    | STU-02               |
-| Student | Submit      | Assignment                | STU-03               |
-| Student | View        | Grade Card                | STU-04               |
-| Student | Pay         | Fee / Receipt             | STU-05               |
-| Student | Register    | Exam / Hall Ticket        | STU-06               |
-| Student | Track       | Performance Analytics     | STU-07               |
-| Student | Raise       | Grievance Ticket          | STU-08               |
-| Student | Apply       | Document Request          | STU-09               |
-| Student | Participate | Discussion Board          | STU-10               |
-
----
-
-# 10. Approval Workflow Engine
-
-NEXORA uses workflow-based processing for operations that require review or authorization.
-
-## 10.1 Grade Submission Workflow
+## Grade Submission
 
 ```text
 Faculty
    ↓
 Enter Marks
    ↓
-Submit Grade Record
+Submit
    ↓
 Admin Review
    ↓
 Approved / Rejected
    ↓
-Student Result Published
+Result Published
 ```
 
----
-
-## 10.2 Course Proposal Workflow
+## Course Proposal
 
 ```text
 Faculty
    ↓
-Create Course Proposal
-   ↓
-Submit Proposal
+Create Proposal
    ↓
 Department Review
    ↓
@@ -729,190 +767,41 @@ Approved / Rejected
 Course Created
 ```
 
----
-
-## 10.3 Leave Request Workflow
+## Leave
 
 ```text
 Faculty
    ↓
-Create Leave Request
-   ↓
-Submit
+Leave Request
    ↓
 Admin Review
    ↓
 Approved / Rejected
-   ↓
-Status Updated
 ```
 
----
-
-## 10.4 Grievance Workflow
+## Grievance
 
 ```text
 Student
    ↓
-Create Grievance
+Create Ticket
    ↓
-Ticket Generated
+Assignment
    ↓
-Assigned to Admin
-   ↓
-Investigation / Action
+Investigation
    ↓
 Resolution
    ↓
-Student Notification
+Notification
    ↓
-Ticket Closed
+Closed
 ```
 
----
-
-## 10.5 Document Request Workflow
+## Document
 
 ```text
 Student
    ↓
-Submit Document Request
-   ↓
-Request Verification
-   ↓
-Admin Approval
-   ↓
-Document Generation
-   ↓
-Digital Verification
-   ↓
-Student Download
-```
-
----
-
-# 11. What Makes NEXORA Different
-
-NEXORA is designed with several capabilities beyond traditional college management portals.
-
----
-
-## 11.1 🎯 Academic Flag System
-
-The Academic Flag System allows faculty to identify students who may require academic or institutional attention.
-
-### Features
-
-* Faculty-raised academic alerts
-* Attendance concern flags
-* Performance concern flags
-* Plagiarism-related flags
-* Misconduct records
-* Welfare alerts
-* Admin intervention workflow
-* Resolution tracking
-* Student support / counselling linkage
-
-### Workflow
-
-```text
-Faculty
-   ↓
-Raise Academic Flag
-   ↓
-Admin Review
-   ↓
-Assign Intervention
-   ↓
-Action Taken
-   ↓
-Flag Resolution
-```
-
----
-
-# 12. 📊 Real-Time Analytics Hub
-
-NEXORA provides institution-level and student-level analytics.
-
-### Analytics Features
-
-* Student CGPA trend visualization
-* Attendance analytics
-* Department performance analytics
-* Semester result analysis
-* Pass/fail statistics
-* Fee collection analytics
-* Enrollment trends
-* Faculty/course performance insights
-* Academic risk indicators
-
-### Example Dashboard
-
-```text
-Student Performance
-├── Current CGPA
-├── Semester CGPA
-├── Attendance %
-├── Assignment Completion
-├── Internal Marks
-├── Final Grades
-└── Performance Trend
-```
-
-> Any predictive or risk-related analytics should be presented as decision-support information rather than as a definitive classification.
-
----
-
-# 13. 🔄 Approval Workflow Engine
-
-NEXORA provides configurable approval pipelines.
-
-### Supported Workflows
-
-```text
-Grade Submission
-Course Proposal
-Leave Request
-Grievance Resolution
-Document Request
-Schedule Change
-Academic Flag
-```
-
-- Workflow States
-
-```text
-DRAFT
-   ↓
-SUBMITTED
-   ↓
-UNDER_REVIEW
-   ↓
-APPROVED / REJECTED
-   ↓
-COMPLETED
-```
-
----
-
-14. 📄 Document Automation
-
-NEXORA automates the creation and management of official documents.
-
- Supported Documents
-
-* Hall Tickets
-* Bonafide Certificates
-* Grade Cards
-* Transcripts
-* Payment Receipts
-* Course Completion Certificates
-* Other institutional documents
-
-### Document Workflow
-
-```text
 Request
    ↓
 Validation
@@ -921,48 +810,163 @@ Approval
    ↓
 Document Generation
    ↓
-Digital Verification
+Verification
    ↓
-Download / Archive
+Download
 ```
 
 ---
 
- 15. 🏛️ Compliance Tracker
+# 19. ACADEMIC FLAG SYSTEM
 
-The Compliance Tracker helps administrators manage institution-level documentation and deadlines.
-
-### Features
-
-* Accreditation document vault
-* Compliance deadline calendar
-* Document ownership
-* Expiry notifications
-* Audit history
-* Document version tracking
-* Audit-ready report exports
-
-### Compliance Record
+Faculty can raise controlled academic/support flags.
 
 ```text
-Compliance ID
-Requirement
-Department
-Document
-Owner
-Submission Date
-Expiry Date
-Status
-Remarks
+Faculty
+   ↓
+Raise Flag
+   ↓
+Admin Review
+   ↓
+Assign Intervention
+   ↓
+Action Taken
+   ↓
+Resolution
+```
+
+Flag types:
+
+```text
+ATTENDANCE
+ACADEMIC
+PLAGIARISM
+MISCONDUCT
+WELFARE
+PERFORMANCE
+```
+
+The system must record creation, review, updates and resolution.
+
+---
+
+# 20. ANALYTICS HUB
+
+## Admin Analytics
+
+```text
+Total Students
+Enrollment Trends
+Attendance Statistics
+Department Performance
+Pass/Fail Statistics
+Fee Collection
+Open Grievances
+Academic Flags
+Course Performance
+```
+
+## Faculty Analytics
+
+```text
+Course Attendance
+Assignment Completion
+Average Marks
+Grade Distribution
+Student Performance
+```
+
+## Student Analytics
+
+```text
+CGPA
+Semester Trend
+Attendance
+Assignment Completion
+Internal Marks
+Course Performance
+```
+
+Any predictive/risk analytics must be treated as decision-support information rather than a definitive classification.
+
+---
+
+# 21. DOCUMENT AUTOMATION
+
+Supported documents:
+
+```text
+Hall Ticket
+Bonafide Certificate
+Grade Card
+Transcript
+Transfer Certificate
+Course Completion Certificate
+Payment Receipt
+```
+
+Workflow:
+
+```text
+Request
+ ↓
+Validation
+ ↓
+Approval
+ ↓
+Generation
+ ↓
+Digital Verification
+ ↓
+Download
+ ↓
+Archive
 ```
 
 ---
 
-# 16. 💬 In-Portal Messaging
+# 22. NOTIFICATION SYSTEM
 
-NEXORA provides role-aware communication inside the portal.
+Notification events:
 
-### Communication Channels
+```text
+Assignment Published
+Assignment Deadline Approaching
+Attendance Warning
+Exam Registration Open
+Hall Ticket Available
+Fee Due
+Payment Successful
+Grade Published
+Course Registration Open
+Grievance Updated
+Document Approved
+Leave Updated
+Academic Flag Created
+Institutional Announcement
+```
+
+Channels:
+
+```text
+IN_APP
+EMAIL
+SMS
+PUSH
+```
+
+The first implementation should prioritize:
+
+```text
+IN_APP
+EMAIL
+```
+
+---
+
+# 23. MESSAGING
+
+Communication channels:
 
 ```text
 Admin → Faculty
@@ -972,119 +976,766 @@ Faculty ↔ Students
 Course → Discussion Board
 ```
 
-### Messaging Features
-
-* Direct messaging
-* Course discussion boards
-* Threaded conversations
-* Institutional announcements
-* Targeted notifications
-* Read/unread tracking
-* Attachments
-* Message search
-
----
-
-# 17. Role-Based Access Control
-
-Access to resources must be controlled according to the authenticated user's role.
-
-## Permission Matrix
-
-| Module                |            Admin |          Faculty |          Student |
-| --------------------- | ---------------: | ---------------: | ---------------: |
-| User Management       |                ✅ |                ❌ |                ❌ |
-| Department Management |                ✅ |             View |                ❌ |
-| Course Management     |                ✅ | Assigned Courses |    View/Register |
-| Attendance            |      View/Manage |           Manage |         View Own |
-| Assignments           |             View |           Manage |      Submit/View |
-| Grades                |   Manage/Approve |    Create/Submit |         View Own |
-| Timetable             |           Manage |         View Own |         View Own |
-| Fees                  |           Manage |                ❌ |     Pay/View Own |
-| Examinations          |           Manage |             View |         Register |
-| Academic Flags        |           Manage |      Create/View |     View Allowed |
-| Grievances            |           Manage |          Limited |  Create/View Own |
-| Documents             |           Manage |          Limited | Request/Download |
-| Notifications         |        Broadcast |     Course-Level |          Receive |
-| Analytics             |      Institution |    Assigned Data |         Personal |
-| Compliance            |           Manage |    View Assigned |                ❌ |
-| Messaging             | Broadcast/Direct |    Course/Direct |    Course/Direct |
-
----
-
-# 18. Authentication Requirements
-
-The portal must provide secure authentication for all three roles.
-
-### Authentication Flow
+Features:
 
 ```text
-User
- ↓
-Login
- ↓
-Credential Validation
- ↓
-Role Identification
- ↓
-Permission Validation
- ↓
-Dashboard
-```
-
-### Authentication Requirements
-
-* Secure password storage
-* Role-based authorization
-* Session management
-* Logout functionality
-* Account activation/deactivation
-* Password reset
-* Login timestamp tracking
-* Failed login monitoring
-* Protected API endpoints
-
----
-
-# 19. Notification System
-
-NEXORA should provide event-driven notifications.
-
-### Notification Events
-
-```text
-Assignment Published
-Assignment Deadline Approaching
-Attendance Warning
-Exam Registration Open
-Hall Ticket Available
-Fee Due
-Fee Payment Successful
-Grade Published
-Course Registration Open
-Grievance Updated
-Document Approved
-Leave Request Updated
-Academic Flag Created
-Institutional Announcement
-```
-
-### Notification Channels
-
-```text
-IN_APP
-EMAIL
-SMS
-PUSH
+Direct Messaging
+Threaded Discussions
+Announcements
+Attachments
+Read/Unread
+Search
 ```
 
 ---
 
-# 20. Search and Filtering
+# 24. RBAC PERMISSION MATRIX
 
-The portal should provide global and module-specific search.
+| Module          | Admin            | Faculty              | Student              |
+| --------------- | ---------------- | -------------------- | -------------------- |
+| User Management | Manage           | ❌                    | ❌                    |
+| Department      | Manage           | View                 | ❌                    |
+| Courses         | Manage           | Assigned             | View/Register        |
+| Attendance      | Manage           | Manage               | Own View             |
+| Assignments     | View             | Manage               | Submit/View          |
+| Grades          | Manage/Approve   | Create/Submit        | Own View             |
+| Timetable       | Manage           | Own View             | Own View             |
+| Fees            | Manage           | ❌                    | Own Pay/View         |
+| Examinations    | Manage           | View                 | Register/View        |
+| Academic Flags  | Manage           | Create/View          | Allowed View         |
+| Grievances      | Manage           | Limited              | Create/View Own      |
+| Documents       | Manage           | Limited              | Request/Download     |
+| Notifications   | Broadcast        | Course               | Receive              |
+| Analytics       | Institution      | Assigned             | Personal             |
+| Compliance      | Manage           | Assigned View        | ❌                    |
+| Messaging       | Broadcast/Direct | Course/Direct        | Course/Direct        |
+| Audit           | Full             | Own relevant actions | Own relevant actions |
 
-### Searchable Entities
+---
+
+# 25. CORE BUSINESS RULES
+
+## BR-01 Role Isolation
+
+Users can access only resources permitted by their role.
+
+## BR-02 Student Privacy
+
+Students can access only their own academic, attendance, financial and document data.
+
+## BR-03 Faculty Course Scope
+
+Faculty can modify academic records only for assigned courses.
+
+## BR-04 Grade Approval
+
+Final grades must pass the configured approval process before publication.
+
+## BR-05 Attendance Ownership
+
+Only authorized faculty can create or modify attendance.
+
+## BR-06 Payment Verification
+
+A payment becomes `PAID` only after server-side verification.
+
+## BR-07 Examination Eligibility
+
+Exam registration must validate configured eligibility rules.
+
+## BR-08 Document Approval
+
+Restricted documents cannot be downloaded before approval.
+
+## BR-09 Auditability
+
+Sensitive operations must create audit records.
+
+## BR-10 Workflow Integrity
+
+Workflow entities must follow valid state transitions.
+
+---
+
+# 26. NON-FUNCTIONAL REQUIREMENTS
+
+## Performance
+
+```text
+Efficient dashboards
+Indexed queries
+Pagination
+Caching where required
+Asynchronous report generation
+```
+
+## Security
+
+```text
+Secure password hashing
+Protected sessions
+RBAC
+Input validation
+API authorization
+Secure file uploads
+Audit logging
+Secret management
+```
+
+## Availability
+
+```text
+Reliable access
+Database backups
+Recovery procedures
+```
+
+## Scalability
+
+The system should support:
+
+```text
+Multiple Departments
+Multiple Programmes
+Multiple Semesters
+Multiple Academic Years
+Thousands of Students
+Large Document Storage
+Multiple Faculty Members
+```
+
+## Maintainability
+
+```text
+Modular architecture
+Reusable components
+Clear API contracts
+Centralized validation
+Centralized errors
+Database migrations
+Automated testing
+```
+
+---
+
+# 27. RECOMMENDED TECHNOLOGY STACK
+
+## Frontend
+
+```text
+Next.js
+TypeScript
+Tailwind CSS
+shadcn/ui
+React Hook Form
+Zod
+Recharts
+```
+
+## Backend
+
+```text
+Next.js API Routes / Server Actions
+TypeScript
+Prisma ORM
+Zod
+```
+
+For larger deployments:
+
+```text
+Node.js / NestJS
+REST API
+```
+
+## Database
+
+```text
+PostgreSQL
+Prisma ORM
+```
+
+## File Storage
+
+```text
+Object/File Storage
+```
+
+---
+
+# 28. PROJECT STRUCTURE
+
+```text
+nexora/
+│
+├── app/
+│   ├── login/
+│   │   └── page.tsx
+│   │
+│   ├── admin/
+│   │   ├── login/
+│   │   ├── dashboard/
+│   │   ├── users/
+│   │   ├── students/
+│   │   ├── faculty/
+│   │   ├── departments/
+│   │   ├── courses/
+│   │   ├── attendance/
+│   │   ├── grades/
+│   │   ├── exams/
+│   │   ├── fees/
+│   │   ├── documents/
+│   │   ├── grievances/
+│   │   ├── analytics/
+│   │   ├── compliance/
+│   │   └── audit/
+│   │
+│   ├── faculty/
+│   │   ├── login/
+│   │   ├── dashboard/
+│   │   ├── courses/
+│   │   ├── timetable/
+│   │   ├── attendance/
+│   │   ├── assignments/
+│   │   ├── quizzes/
+│   │   ├── grades/
+│   │   ├── flags/
+│   │   ├── leave/
+│   │   └── discussions/
+│   │
+│   ├── student/
+│   │   ├── login/
+│   │   ├── dashboard/
+│   │   ├── courses/
+│   │   ├── timetable/
+│   │   ├── attendance/
+│   │   ├── assignments/
+│   │   ├── quizzes/
+│   │   ├── marks/
+│   │   ├── exams/
+│   │   ├── fees/
+│   │   ├── documents/
+│   │   ├── grievances/
+│   │   └── messages/
+│   │
+│   └── api/
+│
+├── components/
+│   ├── ui/
+│   ├── forms/
+│   ├── tables/
+│   ├── charts/
+│   ├── navigation/
+│   └── dashboard/
+│
+├── modules/
+│   ├── auth/
+│   ├── users/
+│   ├── courses/
+│   ├── attendance/
+│   ├── assignments/
+│   ├── grades/
+│   ├── exams/
+│   ├── fees/
+│   ├── documents/
+│   ├── grievances/
+│   ├── notifications/
+│   ├── messaging/
+│   ├── analytics/
+│   ├── compliance/
+│   ├── workflows/
+│   └── audit/
+│
+├── lib/
+│   ├── auth/
+│   ├── database/
+│   ├── permissions/
+│   ├── validation/
+│   └── notifications/
+│
+├── prisma/
+│   ├── schema.prisma
+│   ├── migrations/
+│   └── seed.ts
+│
+├── tests/
+├── middleware.ts
+├── .env
+├── .env.example
+└── README.md
+```
+
+---
+
+# 29. IMPLEMENTATION PHASES
+
+## PHASE 0 — PROJECT SETUP
+
+```text
+Initialize Git repository
+Create Next.js project
+Configure TypeScript
+Configure Tailwind
+Configure shadcn/ui
+Configure PostgreSQL
+Configure Prisma
+Configure ESLint
+Configure Prettier
+Configure environment variables
+```
+
+---
+
+# 30. PHASE 1 — AUTHENTICATION + THREE LOGIN PORTALS
+
+Build first:
+
+```text
+/login
+
+/admin/login
+/faculty/login
+/student/login
+```
+
+Implement:
+
+```text
+Credential validation
+Password hashing
+Session management
+Role verification
+Route protection
+Logout
+Forgot password
+Account activation/deactivation
+Failed login monitoring
+```
+
+### Result
+
+```text
+Admin Login → Admin Dashboard
+Faculty Login → Faculty Dashboard
+Student Login → Student Dashboard
+```
+
+---
+
+# 31. PHASE 2 — USER + ACADEMIC FOUNDATION
+
+Implement:
+
+```text
+User Management
+Student Management
+Faculty Management
+Department Management
+Course Management
+Course Enrollment
+Academic Year
+Semester
+Academic Calendar
+```
+
+---
+
+# 32. PHASE 3 — TIMETABLE + ATTENDANCE
+
+Implement:
+
+```text
+Room Management
+Timetable
+Faculty Schedule
+Student Schedule
+Attendance Sessions
+Attendance Records
+Attendance Analytics
+```
+
+---
+
+# 33. PHASE 4 — ASSIGNMENTS + QUIZZES + GRADES
+
+Implement:
+
+```text
+Course Materials
+Assignments
+File Uploads
+Assignment Submission
+Quiz
+Quiz Questions
+Quiz Attempts
+Grading
+Grade Records
+Grade Approval
+```
+
+---
+
+# 34. PHASE 5 — EXAMINATION MANAGEMENT
+
+Implement:
+
+```text
+Examination
+Exam Schedule
+Exam Registration
+Eligibility
+Hall Ticket
+Exam Results
+```
+
+---
+
+# 35. PHASE 6 — FEES
+
+Implement:
+
+```text
+Fee Structure
+Student Fees
+Scholarships
+Payments
+Payment Verification
+Receipts
+Payment History
+```
+
+---
+
+# 36. PHASE 7 — DOCUMENTS + GRIEVANCES
+
+Implement:
+
+```text
+Document Requests
+Document Generation
+Digital Verification
+Download
+Grievance Tickets
+Ticket Assignment
+Resolution Workflow
+```
+
+---
+
+# 37. PHASE 8 — NOTIFICATIONS + MESSAGING
+
+Implement:
+
+```text
+Announcements
+In-App Notifications
+Email Notifications
+Direct Messaging
+Discussion Boards
+Unread Counters
+Message Search
+```
+
+---
+
+# 38. PHASE 9 — ACADEMIC FLAGS + WORKFLOW ENGINE
+
+Implement:
+
+```text
+Academic Flags
+Workflow Definitions
+Workflow Instances
+Workflow History
+Approval Transitions
+Intervention Tracking
+```
+
+---
+
+# 39. PHASE 10 — ANALYTICS + COMPLIANCE
+
+Implement:
+
+```text
+Admin Analytics
+Faculty Analytics
+Student Analytics
+Attendance Analytics
+Result Analytics
+Fee Analytics
+Compliance Tracker
+Document Vault
+Deadline Tracking
+```
+
+---
+
+# 40. PHASE 11 — AUDIT + REPORTING
+
+Implement:
+
+```text
+Audit Logs
+Activity History
+CSV Reports
+PDF Reports
+Institutional Reports
+Attendance Reports
+Grade Reports
+Fee Reports
+Exam Reports
+Compliance Reports
+```
+
+---
+
+# 41. PHASE 12 — TESTING + SECURITY
+
+## Unit Tests
+
+Test:
+
+```text
+Validation
+Permissions
+Attendance calculations
+Grade calculations
+CGPA calculations
+Fee calculations
+Workflow transitions
+```
+
+## Integration Tests
+
+Test:
+
+```text
+Authentication
+API authorization
+Database operations
+Attendance
+Assignments
+Grades
+Exams
+Fees
+Documents
+Notifications
+```
+
+## End-to-End Tests
+
+### Admin Flow
+
+```text
+Admin Login
+ ↓
+Create Faculty
+ ↓
+Create Course
+ ↓
+Assign Faculty
+ ↓
+Publish Course
+```
+
+### Faculty Flow
+
+```text
+Faculty Login
+ ↓
+Open Course
+ ↓
+Mark Attendance
+ ↓
+Create Assignment
+ ↓
+Grade Submission
+ ↓
+Submit Grades
+```
+
+### Student Flow
+
+```text
+Student Login
+ ↓
+Register Course
+ ↓
+View Timetable
+ ↓
+Submit Assignment
+ ↓
+View Attendance
+ ↓
+View Marks
+ ↓
+Pay Fee
+ ↓
+Register Exam
+```
+
+---
+
+# 42. DASHBOARDS
+
+## ADMIN DASHBOARD
+
+```text
+Total Students
+Total Faculty
+Departments
+Active Courses
+Attendance Overview
+Result Analytics
+Fee Collection
+Pending Approvals
+Open Grievances
+Academic Flags
+Compliance Alerts
+Announcements
+```
+
+## FACULTY DASHBOARD
+
+```text
+Assigned Courses
+Today's Timetable
+Attendance
+Assignments
+Pending Evaluations
+Grade Submission
+Academic Flags
+Leave Requests
+Course Discussions
+Notifications
+```
+
+## STUDENT DASHBOARD
+
+```text
+Profile
+Current Semester
+Timetable
+Attendance
+Assignments
+Internal Marks
+CGPA
+Examination Registration
+Fees
+Academic Flags
+Grievances
+Documents
+Notifications
+```
+
+---
+
+# 43. API ARCHITECTURE
+
+## Authentication
+
+```text
+POST /api/auth/admin/login
+POST /api/auth/faculty/login
+POST /api/auth/student/login
+POST /api/auth/logout
+GET  /api/auth/me
+```
+
+## Users
+
+```text
+GET    /api/users
+POST   /api/users
+GET    /api/users/:id
+PATCH  /api/users/:id
+DELETE /api/users/:id
+```
+
+## Courses
+
+```text
+GET    /api/courses
+POST   /api/courses
+GET    /api/courses/:id
+PATCH  /api/courses/:id
+DELETE /api/courses/:id
+```
+
+## Attendance
+
+```text
+GET   /api/attendance
+POST  /api/attendance
+PATCH /api/attendance/:id
+```
+
+## Assignments
+
+```text
+GET  /api/assignments
+POST /api/assignments
+POST /api/assignments/:id/submit
+POST /api/assignments/:id/grade
+```
+
+## Grades
+
+```text
+GET  /api/grades
+POST /api/grades
+POST /api/grades/:id/submit
+POST /api/grades/:id/approve
+POST /api/grades/:id/reject
+```
+
+Additional APIs should follow the same structure for:
+
+```text
+Exams
+Fees
+Documents
+Grievances
+Notifications
+Messages
+Workflows
+Analytics
+Compliance
+Audit
+```
+
+---
+
+# 44. AUTHORIZATION FLOW
+
+Every protected operation must follow:
+
+```text
+Request
+   ↓
+Authenticated?
+   ↓
+Expected Role?
+   ↓
+Resource Ownership?
+   ↓
+Permission Check?
+   ↓
+Business Rule Validation?
+   ↓
+Database Operation
+   ↓
+Audit Log
+```
+
+Frontend route protection alone is not sufficient.
+
+---
+
+# 45. SEARCH AND FILTERING
+
+Searchable entities:
 
 ```text
 Users
@@ -1094,13 +1745,13 @@ Courses
 Assignments
 Attendance
 Grades
-Fee Records
+Fees
 Grievances
 Documents
 Notifications
 ```
 
-### Filters
+Filters:
 
 ```text
 Department
@@ -1115,13 +1766,38 @@ Faculty
 Student
 ```
 
+Use:
+
+```text
+Pagination
+Sorting
+Filtering
+Indexed Queries
+```
+
 ---
 
-# 21. Audit Trail
+# 46. AUDIT TRAIL
 
-All sensitive operations should be recorded in an audit trail.
+Record sensitive actions:
 
-### Audit Record
+```text
+CREATE
+UPDATE
+DELETE
+LOGIN
+LOGOUT
+APPROVE
+REJECT
+PUBLISH
+DOWNLOAD
+PAYMENT
+GRADE_CHANGE
+ATTENDANCE_CHANGE
+ROLE_CHANGE
+```
+
+Audit record:
 
 ```text
 auditID
@@ -1133,394 +1809,440 @@ oldValue
 newValue
 timestamp
 ipAddress
+userAgent
 ```
 
-### Example
+---
+
+# 47. FILE STORAGE
+
+Files should be stored in object/file storage, not directly inside database records.
 
 ```text
-Admin
+Database
    ↓
-Updated Fee Structure
+File Metadata
    ↓
-Audit Record Created
+Object Storage
+   ↓
+Secure File URL
+```
+
+Validate:
+
+```text
+File Type
+File Size
+Upload Permission
+File Name
 ```
 
 ---
 
-# 22. Data Relationships
+# 48. DEPLOYMENT ARCHITECTURE
 
-## High-Level Relationship Model
+## Development
 
 ```text
-User Account
- ├── Admin
- ├── Faculty
- └── Student
+VS Code
+   ↓
+Local Next.js
+   ↓
+Local/PostgreSQL
+   ↓
+Git
+   ↓
+GitHub
+```
 
-Department
- ├── Faculty
- └── Course
+## Production
 
-Course
- ├── Faculty
- ├── Students
- ├── Assignments
- ├── Attendance
- └── Timetable
+```text
+User
+ ↓
+Web Hosting
+ ↓
+Next.js
+ ↓
+PostgreSQL
+ ↓
+Object Storage
+ ↓
+Notification Services
+```
 
-Student
- ├── Courses
- ├── Attendance
- ├── Assignments
- ├── Grades
- ├── Fees
- ├── Exams
- ├── Grievances
- ├── Documents
- └── Academic Flags
+CI/CD:
 
-Faculty
- ├── Courses
- ├── Assignments
- ├── Attendance
- ├── Grade Records
- ├── Academic Flags
- ├── Leave Requests
- └── Course Proposals
+```text
+Git Push
+ ↓
+Lint
+ ↓
+Type Check
+ ↓
+Tests
+ ↓
+Build
+ ↓
+Deploy
 ```
 
 ---
 
-# 23. Core Business Rules
+# 49. ENVIRONMENT VARIABLES
 
-## BR-01 — Role Isolation
-
-A user can access only resources permitted by their assigned role.
-
-## BR-02 — Student Data Privacy
-
-Students can access only their own academic, financial, attendance, and document records unless explicitly authorized.
-
-## BR-03 — Faculty Course Scope
-
-Faculty can modify academic data only for courses assigned to them.
-
-## BR-04 — Grade Approval
-
-Final grade records must pass the defined approval workflow before publication.
-
-## BR-05 — Attendance Ownership
-
-Only authorized faculty members can create or modify attendance for their assigned courses.
-
-## BR-06 — Fee Verification
-
-A fee transaction must be verified before the payment record is marked as `PAID`.
-
-## BR-07 — Examination Eligibility
-
-Exam registration should validate the required eligibility conditions configured by the institution.
-
-## BR-08 — Document Approval
-
-Official documents requiring authorization cannot be downloaded until their status becomes `APPROVED`.
-
-## BR-09 — Auditability
-
-Important create, update, approval, rejection, and deletion operations must be recorded in the audit trail.
-
-## BR-10 — Workflow State Integrity
-
-Entities participating in approval workflows must follow valid state transitions.
-
----
-
-# 24. Non-Functional Requirements
-
-## Performance
-
-* Dashboard pages should load efficiently.
-* Common database queries should be indexed.
-* APIs should support pagination for large datasets.
-* Reports should support asynchronous generation when required.
-
-## Security
-
-* Passwords must be securely hashed.
-* Authentication tokens/sessions must be protected.
-* APIs must enforce authorization.
-* Sensitive student information must not be exposed to unauthorized users.
-* Audit logs should be protected from unauthorized modification.
-
-## Availability
-
-* System should support reliable access during registration and examination periods.
-* Regular backups should be maintained.
-* Recovery procedures should be defined.
-
-## Scalability
-
-The architecture should support:
+Use:
 
 ```text
-Multiple Departments
-Multiple Programmes
-Multiple Semesters
-Multiple Academic Years
-Thousands of Students
-Multiple Faculty Members
-Large Assignment / Document Storage
+.env
+.env.example
 ```
 
-## Maintainability
+Example:
 
-* Modular backend architecture
-* Reusable frontend components
-* Clear API contracts
-* Centralized validation
-* Centralized error handling
-* Database migration strategy
-* Automated testing
+```text
+DATABASE_URL=
+AUTH_SECRET=
+NEXT_PUBLIC_APP_URL=
+FILE_STORAGE_URL=
+EMAIL_SERVER=
+PAYMENT_GATEWAY_KEY=
+```
+
+Never commit production secrets to GitHub.
 
 ---
 
-# 25. Suggested System Modules
+# 50. RECOMMENDED DEVELOPMENT ORDER
 
 ```text
-NEXORA
-│
-├── Authentication
-│
-├── User Management
-│
-├── Student Management
-│
-├── Faculty Management
-│
-├── Department Management
-│
-├── Course Management
-│
-├── Academic Calendar
-│
-├── Attendance
-│
-├── Assignments & Quizzes
-│
-├── Grade Management
-│
-├── Examination Management
-│
-├── Timetable Management
-│
-├── Fee Management
-│
-├── Academic Flag System
-│
-├── Grievance Management
-│
-├── Document Management
-│
-├── Notification System
-│
-├── Messaging
-│
-├── Analytics
-│
-├── Compliance Tracker
-│
-├── Approval Workflow Engine
-│
-└── Audit & Reporting
+1. Project Setup
+2. Database Setup
+3. Three Login Pages
+4. Authentication
+5. RBAC
+6. Admin Dashboard
+7. Faculty Dashboard
+8. Student Dashboard
+9. User Management
+10. Student Management
+11. Faculty Management
+12. Department Management
+13. Course Management
+14. Enrollment
+15. Academic Calendar
+16. Timetable
+17. Attendance
+18. Course Materials
+19. Assignments
+20. Assignment Submission
+21. Quizzes
+22. Grades
+23. Grade Approval
+24. Examinations
+25. Fees
+26. Payments
+27. Documents
+28. Grievances
+29. Academic Flags
+30. Notifications
+31. Messaging
+32. Discussion Boards
+33. Workflow Engine
+34. Analytics
+35. Compliance
+36. Audit Trail
+37. Reports
+38. Security Testing
+39. Performance Testing
+40. Deployment
 ```
 
 ---
 
-# 26. Recommended Portal Dashboards
+# 51. MVP VERSION
 
-## Admin Dashboard
+The first working release should contain:
 
 ```text
-Admin Dashboard
-├── Total Students
-├── Total Faculty
+AUTHENTICATION
+├── Admin Login
+├── Faculty Login
+└── Student Login
+
+ADMIN
+├── Users
 ├── Departments
-├── Active Courses
-├── Attendance Overview
-├── Result Analytics
-├── Fee Collection
-├── Pending Approvals
-├── Open Grievances
-├── Academic Flags
-├── Compliance Alerts
-└── Institutional Announcements
-```
-
-## Faculty Dashboard
-
-```text
-Faculty Dashboard
-├── Assigned Courses
-├── Today's Timetable
+├── Courses
+├── Timetable
 ├── Attendance
-├── Assignments
-├── Pending Evaluations
-├── Grade Submission
-├── Academic Flags
-├── Leave Requests
-├── Course Discussions
-└── Notifications
-```
+├── Grades
+└── Dashboard
 
-## Student Dashboard
-
-```text
-Student Dashboard
-├── Profile
-├── Current Semester
+FACULTY
+├── Courses
 ├── Timetable
 ├── Attendance
 ├── Assignments
-├── Internal Marks
-├── CGPA
-├── Examination Registration
-├── Fees
-├── Academic Flags
-├── Grievances
-├── Documents
-└── Notifications
+├── Grades
+└── Dashboard
+
+STUDENT
+├── Courses
+├── Timetable
+├── Attendance
+├── Assignments
+├── Marks
+└── Dashboard
 ```
 
+Once this works reliably, build the advanced modules.
+
 ---
 
-# 27. Future Enhancements
+# 52. DEVELOPMENT MILESTONES
 
-Potential future versions of NEXORA may include:
+## Milestone 1 — Foundation
 
 ```text
-AI Study Assistant
-AI-Based Document Processing
-Smart Attendance Insights
-Advanced Course Recommendation
-Automated Schedule Conflict Detection
-Digital ID Card
-QR-Based Attendance
-Library Management
-Hostel Management
-Transport Management
-Placement Management
-Alumni Management
-Parent Portal
-Mobile Application
-Biometric Integration
-ERP Integration
-University API Integration
-```
-
----
-
-# 28. Project Success Criteria
-
-NEXORA will be considered functionally complete when:
-
-* All three roles can securely authenticate.
-* Role-based permissions are enforced.
-* Admin can manage institutional configuration.
-* Faculty can manage assigned academic activities.
-* Students can complete core academic workflows.
-* Grade and approval workflows operate correctly.
-* Fee and document workflows are traceable.
-* Notifications are delivered according to role and event.
-* Important operations are recorded in the audit trail.
-* Institution-wide and role-specific dashboards are available.
-* Core data entities and relationships are persisted consistently.
-
----
-
-# 29. Project Status
-
-```text
-Project: NEXORA
-Version: 1.0
-Stage: Requirements Phase
-
-Roles:
-✓ Admin
-✓ Faculty
-✓ Student
-
-Core Areas:
+✓ Project setup
+✓ Database
+✓ Three login pages
 ✓ Authentication
-✓ User Management
-✓ Academics
+✓ RBAC
+✓ Dashboards
+```
+
+## Milestone 2 — Academic Core
+
+```text
+✓ Departments
+✓ Courses
+✓ Enrollment
+✓ Timetable
 ✓ Attendance
+```
+
+## Milestone 3 — Assessment
+
+```text
 ✓ Assignments
+✓ Submissions
+✓ Quizzes
 ✓ Grades
-✓ Examination
+✓ Approval Workflow
+```
+
+## Milestone 4 — Operations
+
+```text
+✓ Examinations
 ✓ Fees
+✓ Payments
 ✓ Documents
 ✓ Grievances
+```
+
+## Milestone 5 — Communication
+
+```text
 ✓ Notifications
-✓ Analytics
-✓ Workflow Engine
-✓ Compliance
+✓ Announcements
 ✓ Messaging
+✓ Discussions
+```
+
+## Milestone 6 — Intelligence
+
+```text
+✓ Academic Flags
+✓ Analytics
+✓ Compliance
+✓ Reports
 ✓ Audit Trail
 ```
 
----
-
-# 30. Final Architecture Concept
+## Milestone 7 — Production
 
 ```text
-                        ┌─────────────────────┐
-                        │       NEXORA        │
-                        │ College Management  │
-                        │       Portal        │
-                        └──────────┬──────────┘
-                                   │
-              ┌────────────────────┼────────────────────┐
-              │                    │                    │
-              ▼                    ▼                    ▼
-        ┌───────────┐        ┌───────────┐        ┌───────────┐
-        │   ADMIN   │        │  FACULTY  │        │  STUDENT  │
-        └─────┬─────┘        └─────┬─────┘        └─────┬─────┘
-              │                    │                    │
-              └────────────────────┼────────────────────┘
-                                   │
-                                   ▼
-                        ┌─────────────────────┐
-                        │  RBAC + API Layer   │
-                        └──────────┬──────────┘
-                                   │
-        ┌──────────────────────────┼──────────────────────────┐
-        │                          │                          │
-        ▼                          ▼                          ▼
-┌───────────────┐          ┌───────────────┐          ┌───────────────┐
-│ Academic      │          │ Administration│          │ Communication │
-│ Modules       │          │ Modules       │          │ Modules       │
-└───────┬───────┘          └───────┬───────┘          └───────┬───────┘
-        │                          │                          │
-        └──────────────────────────┼──────────────────────────┘
-                                   │
-                                   ▼
-                        ┌─────────────────────┐
-                        │     Data Layer      │
-                        │ Users / Courses /   │
-                        │ Grades / Fees / etc │
-                        └──────────┬──────────┘
-                                   │
-                                   ▼
-                        ┌─────────────────────┐
-                        │ Analytics + Audit   │
-                        │ + Reporting Engine  │
-                        └─────────────────────┘
+✓ Security testing
+✓ Performance testing
+✓ Bug fixing
+✓ Deployment
+✓ Backup
+✓ Monitoring
 ```
 
 ---
+
+# 53. DEFINITION OF DONE
+
+A feature is complete only when:
+
+```text
+UI Completed
+     ↓
+Database Completed
+     ↓
+API Completed
+     ↓
+Validation Completed
+     ↓
+Authorization Completed
+     ↓
+Business Rules Completed
+     ↓
+Error Handling Completed
+     ↓
+Audit Logging Completed
+     ↓
+Unit Tests Completed
+     ↓
+Integration Tests Completed
+     ↓
+Responsive UI Verified
+     ↓
+Documentation Updated
+```
+
+---
+
+# 54. COMPLETE FINAL ARCHITECTURE
+
+```text
+                         ┌──────────────────────┐
+                         │       NEXORA         │
+                         │ College Management    │
+                         │       Portal         │
+                         └──────────┬───────────┘
+                                    │
+                             Portal Selection
+                                    │
+                ┌───────────────────┼───────────────────┐
+                │                   │                   │
+                ▼                   ▼                   ▼
+        ┌──────────────┐    ┌──────────────┐    ┌──────────────┐
+        │ ADMIN LOGIN  │    │FACULTY LOGIN │    │STUDENT LOGIN │
+        │/admin/login  │    │/faculty/login│    │/student/login│
+        └──────┬───────┘    └──────┬───────┘    └──────┬───────┘
+               │                   │                   │
+               ▼                   ▼                   ▼
+        Admin Dashboard     Faculty Dashboard    Student Dashboard
+               │                   │                   │
+               └───────────────────┼───────────────────┘
+                                   ▼
+                         ┌────────────────────┐
+                         │ Authentication +   │
+                         │ RBAC Middleware    │
+                         └─────────┬──────────┘
+                                   ▼
+                         ┌────────────────────┐
+                         │ API / Business     │
+                         │ Logic Layer        │
+                         └─────────┬──────────┘
+                                   │
+       ┌───────────────────────────┼───────────────────────────┐
+       │                           │                           │
+       ▼                           ▼                           ▼
+┌───────────────┐          ┌────────────────┐          ┌────────────────┐
+│   Academic    │          │ Administration │          │ Communication  │
+│   Modules     │          │    Modules     │          │    Modules     │
+├───────────────┤          ├────────────────┤          ├────────────────┤
+│ Courses       │          │ Users          │          │ Notifications  │
+│ Attendance    │          │ Fees           │          │ Messaging      │
+│ Assignments   │          │ Documents      │          │ Discussions    │
+│ Grades        │          │ Grievances     │          │ Announcements  │
+│ Exams         │          │ Compliance     │          └────────────────┘
+│ Timetable     │          │ Workflows      │
+└───────┬───────┘          └───────┬────────┘
+        │                          │
+        └──────────────────────────┼──────────────────────────┐
+                                   ▼                          │
+                          ┌────────────────────┐              │
+                          │    PostgreSQL      │              │
+                          │      Database      │              │
+                          └─────────┬──────────┘              │
+                                    │                         │
+                    ┌───────────────┼───────────────┐         │
+                    ▼               ▼               ▼         │
+             ┌───────────┐   ┌────────────┐   ┌───────────┐ │
+             │   Files   │   │   Audit    │   │ Analytics │ │
+             │  Storage  │   │   Logs     │   │  Engine   │ │
+             └───────────┘   └────────────┘   └─────┬─────┘ │
+                                                     │       │
+                                                     ▼       │
+                                                ┌─────────┐  │
+                                                │ Reports │  │
+                                                └─────────┘  │
+                                                            │
+                         └──────────────────────────────────┘
+```
+
+---
+
+# 55. FINAL PROJECT SUCCESS CRITERIA
+
+NEXORA is considered functionally complete when:
+
+```text
+✓ Three separate login pages are available
+✓ Admin authentication works
+✓ Faculty authentication works
+✓ Student authentication works
+✓ RBAC is enforced
+✓ Users can access only their authorized portals
+✓ Admin can manage institutional configuration
+✓ Faculty can manage assigned academic activities
+✓ Students can complete core academic workflows
+✓ Course and enrollment workflows work
+✓ Attendance works
+✓ Assignment workflows work
+✓ Grade workflows work
+✓ Examination workflows work
+✓ Fee workflows work
+✓ Document workflows work
+✓ Grievances work
+✓ Notifications work
+✓ Approval workflows work
+✓ Analytics dashboards work
+✓ Audit logging works
+✓ Security controls are implemented
+✓ Automated tests cover critical workflows
+✓ Application is deployable
+```
+
+---
+
+# 56. FINAL NEXORA IMPLEMENTATION PRINCIPLE
+
+```text
+SEPARATE LOGIN PORTALS
+          ↓
+SECURE AUTHENTICATION
+          ↓
+ROLE-BASED ACCESS CONTROL
+          ↓
+ACADEMIC FOUNDATION
+          ↓
+ATTENDANCE + ASSIGNMENTS + GRADES
+          ↓
+EXAM + FEES + DOCUMENTS
+          ↓
+GRIEVANCES + COMMUNICATION
+          ↓
+WORKFLOW AUTOMATION
+          ↓
+ANALYTICS + COMPLIANCE
+          ↓
+AUDIT + REPORTING
+          ↓
+TESTING + SECURITY
+          ↓
+DEPLOYMENT
+```
 
 # NEXORA
 
 ### One Portal. Three Roles. Connected Academic Operations.
 
-**End of Requirements Document**
+**End of Requirements and Implementation Document**
